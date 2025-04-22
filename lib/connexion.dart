@@ -17,6 +17,7 @@ class _ConnexionState extends State<Connexion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 234, 234),
       body: Padding(
         padding: const EdgeInsets.all(63),
 
@@ -26,7 +27,7 @@ class _ConnexionState extends State<Connexion> {
             children: [
               Text(
                 'Connexion',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40,color: Color.fromARGB(255, 49, 203, 54)),
               ),
               SizedBox(height: 55),
               TextFormField(
@@ -35,7 +36,10 @@ class _ConnexionState extends State<Connexion> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.white),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                   labelText: "Adresse email",
                   hintText: "Veuillez saisir votre email",
                 ),
@@ -48,7 +52,10 @@ class _ConnexionState extends State<Connexion> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.white),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                   labelText: "Mot de passe",
                   hintText: "Votre mot de passe",
                   suffix: IconButton(
@@ -108,7 +115,7 @@ class _ConnexionState extends State<Connexion> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Color.fromARGB(255, 49, 203, 54),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -117,7 +124,7 @@ class _ConnexionState extends State<Connexion> {
                   child: Text("Se connecter"),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               Row(
                 children: [
                   Text("Vous n'avez pas de compte?"),
@@ -134,7 +141,7 @@ class _ConnexionState extends State<Connexion> {
                     },
                     child: Text(
                       "S'incrire",
-                      style: TextStyle(color: Colors.green),
+                      style: TextStyle(color: Color.fromARGB(255, 49, 203, 54),),
                     ),
                   ),
                 ],

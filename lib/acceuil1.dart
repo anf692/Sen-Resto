@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sen_restau/connexion.dart';
+import 'package:sen_restau/inscrire.dart';
 
 class AccueilPage extends StatelessWidget {
   const AccueilPage({super.key});
@@ -6,7 +8,7 @@ class AccueilPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Color.fromARGB(255, 49, 203, 54),
+      backgroundColor: Color.fromARGB(255, 49, 203, 54),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -26,13 +28,22 @@ class AccueilPage extends StatelessWidget {
               // BOUTON Se connecter
               ElevatedButton(
                 onPressed: () {
-                  // Action vers la page de connexion
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Connexion();
+                      },
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 15,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -53,7 +64,14 @@ class AccueilPage extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      // Action vers la page d'inscription
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return Inscrire();
+                          },
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.red,
@@ -65,7 +83,6 @@ class AccueilPage extends StatelessWidget {
                   ),
                 ],
               ),
-              
             ],
           ),
         ),

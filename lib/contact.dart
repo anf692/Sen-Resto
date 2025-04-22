@@ -26,7 +26,10 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Message envoyé !')),
+        const SnackBar(
+          content: Text('Message envoyé !'),
+          duration: Duration(seconds: 1),
+        ),
       );
       
       _nameController.clear();

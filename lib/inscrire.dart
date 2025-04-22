@@ -18,6 +18,7 @@ class _InscrireState extends State<Inscrire> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 234, 234),
       body: Padding(
         padding: const EdgeInsets.all(63),
 
@@ -27,7 +28,7 @@ class _InscrireState extends State<Inscrire> {
             children: [
               Text(
                 "S'inscrire",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40,color: Color.fromARGB(255, 49, 203, 54)),
               ),
               SizedBox(height:20),
               TextFormField(
@@ -36,7 +37,10 @@ class _InscrireState extends State<Inscrire> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.white),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                   labelText: "Donner votre nom complet",
                   hintText: "Veuillez saisir votre complet",
                 ),
@@ -48,7 +52,10 @@ class _InscrireState extends State<Inscrire> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.white),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                   labelText: "Adresse email",
                   hintText: "Veuillez saisir votre email",
                 ),
@@ -61,7 +68,10 @@ class _InscrireState extends State<Inscrire> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.white),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                   labelText: "Mot de passe",
                   hintText: "Votre mot de passe",
                   suffix: IconButton(
@@ -86,7 +96,10 @@ class _InscrireState extends State<Inscrire> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.white),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                   labelText: "Confirmer le mot de passe",
                   hintText: "Confirmer le mot de passe",
                   suffix: IconButton(
@@ -137,7 +150,7 @@ class _InscrireState extends State<Inscrire> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Color.fromARGB(255, 49, 203, 54),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -163,7 +176,7 @@ class _InscrireState extends State<Inscrire> {
                     },
                     child: Text(
                       "Se connecter",
-                      style: TextStyle(color: Colors.green),
+                      style: TextStyle(color: Color.fromARGB(255, 49, 203, 54)),
                     ),
                   ),
                 ],
