@@ -16,7 +16,10 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 236, 234, 234),
       appBar: AppBar(
-        title: Text("Panier",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+        title: Text(
+          "Panier",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        ),
         actions: [Icon(Icons.more_vert)],
         backgroundColor: Colors.white,
       ),
@@ -29,14 +32,22 @@ class _CartPageState extends State<CartPage> {
                     itemCount: cart.length,
                     itemBuilder: (context, index) {
                       final item = cart[index];
+
                       return Container(
                         margin: EdgeInsets.all(8),
                         height: 100,
                         child: Card(
                           color: Colors.white,
                           child: ListTile(
-                            leading: Image.asset(item['image'], width: 50),
-                            title: Text(item['name'], style: TextStyle(color: Color.fromARGB(255, 49, 203, 54),),),
+                            leading: item['imageBytes'] != null
+                                ? Image.memory(item['imageBytes'], width: 50, height: 50, fit: BoxFit.cover)
+                                : Image.asset(item['image'], width: 50, height: 50, fit: BoxFit.cover),
+                            title: Text(
+                              item['name'],
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 49, 203, 54),
+                              ),
+                            ),
                             subtitle: Text('${item['price']} FCFA'),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -59,14 +70,13 @@ class _CartPageState extends State<CartPage> {
                                   },
                                 ),
                                 IconButton(
-                                icon: Icon(Icons.delete, color: Colors.red), // Ajoute une couleur rouge à l'icône
-                                onPressed: () {
-                                  setState(() {
-                                    CartManager().removeItem(index); // Supprime l'article à l'index donné
-                                  });
-                                },
-                              ),
-                        
+                                  icon: Icon(Icons.delete, color: Colors.red),
+                                  onPressed: () {
+                                    setState(() {
+                                      CartManager().removeItem(index);
+                                    });
+                                  },
+                                ),
                               ],
                             ),
                           ),
@@ -80,7 +90,13 @@ class _CartPageState extends State<CartPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Total", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                      Text(
+                        "Total",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
                       Text(
                         "${CartManager().total.toStringAsFixed(0)} FCFA",
                         style: TextStyle(
