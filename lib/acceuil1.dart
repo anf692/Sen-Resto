@@ -8,22 +8,18 @@ class AccueilPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 49, 203, 54),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // LOGO
-              Text(
-                'logo',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 50),
+              Image.asset(
+                "images/logo2.png",
+                height: 300,
+                width: 200,
+                fit: BoxFit.cover,),
 
               // BOUTON Se connecter
               ElevatedButton(
@@ -38,8 +34,8 @@ class AccueilPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
+                  backgroundColor: Color.fromARGB(255, 49, 203, 54),
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 40,
                     vertical: 15,

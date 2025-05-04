@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sen_restau/cart.dart';
 import 'package:sen_restau/cart_manager.dart';
+import 'package:sen_restau/connexion.dart';
 import 'package:sen_restau/details.dart';
 import 'package:sen_restau/navbar.dart';
+import 'package:sen_restau/provider/AuthProvider.dart';
+import 'package:provider/provider.dart';
 
 class Acceuil extends StatefulWidget {
   const Acceuil({super.key});
@@ -12,27 +15,99 @@ class Acceuil extends StatefulWidget {
 }
 
 class _AcceuilState extends State<Acceuil> {
+  
   @override
   Widget build(BuildContext context) {
     const List<Map<String, dynamic>> products = [
-      {'image': 'images/burgger.PNG', 'name': 'Burgger', 'Price': 588, 'description':'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-      {'image': 'images/chawarma.PNG', 'name': 'Chawarma', 'Price': 499,'description':'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-      {'image': 'images/fataya.PNG', 'name': 'Fataya', 'Price': 390,'description':'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-      {'image': 'images/logo.PNG', 'name': 'Burgger', 'Price': 20,'description':'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-      {'image': 'images/sandiwich.PNG', 'name': 'Sandiwich', 'Price': 384,'description':'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-      {'image': 'images/tacos.PNG', 'name': 'Tacos', 'Price': 164,'description':'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
+      {
+        'image': 'images/burgger.PNG',
+        'name': 'Burgger',
+        'Price': 588,
+        'description':
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      },
+      {
+        'image': 'images/chawarma.PNG',
+        'name': 'Chawarma',
+        'Price': 499,
+        'description':
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      },
+      {
+        'image': 'images/fataya.PNG',
+        'name': 'Fataya',
+        'Price': 390,
+        'description':
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      },
+      {
+        'image': 'images/logo.PNG',
+        'name': 'Burgger',
+        'Price': 20,
+        'description':
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      },
+      {
+        'image': 'images/sandiwich.PNG',
+        'name': 'Sandiwich',
+        'Price': 384,
+        'description':
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      },
+      {
+        'image': 'images/tacos.PNG',
+        'name': 'Tacos',
+        'Price': 164,
+        'description':
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      },
     ];
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 236, 234, 234),
       appBar: AppBar(
-        actions: [Icon(Icons.more_vert)],
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert),
+            onSelected: (String result) {
+              if (result == 'logout') {
+                Provider.of<AuthProvider>(context, listen: false).logout();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Connexion();
+                    },
+                  ),
+                );
+              }
+            },
+            itemBuilder:
+                (BuildContext context) => <PopupMenuEntry<String>>[
+                  const PopupMenuItem<String>(
+                    value: 'logout',
+                    child: Text('Se déconnecter'),
+                  ),
+                ],
+          ),
+        ],
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
       ),
       drawer: Drawer(
         child: ListView(
           children: [
+            UserAccountsDrawerHeader(
+              accountName: Text("Nom Utilisateur"),
+              accountEmail: Text("email@exemple.com"),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.person, size: 40),
+              ),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 49, 203, 54),
+              ),
+            ),
             ListTile(
               leading: Icon(
                 Icons.home,
@@ -42,11 +117,7 @@ class _AcceuilState extends State<Acceuil> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Navbar();
-                    },
-                  ),
+                  MaterialPageRoute(builder: (context) => Navbar()),
                 );
               },
             ),
@@ -73,6 +144,22 @@ class _AcceuilState extends State<Acceuil> {
               title: Text("Contact"),
               onTap: () {},
             ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.logout, color: Colors.red),
+              title: Text("Se déconnecter"),
+              onTap: () {
+                Provider.of<AuthProvider>(context, listen: false).logout();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Connexion();
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -82,7 +169,7 @@ class _AcceuilState extends State<Acceuil> {
           children: [
             SizedBox(height: 20),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end, 
               children: [
                 ElevatedButton(
                   onPressed: () {},
@@ -97,8 +184,9 @@ class _AcceuilState extends State<Acceuil> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.add, color: Colors.red),
-                      Text("Creer un produits"),
+                      Icon(Icons.add, color: Colors.white),
+                      SizedBox(width: 5),
+                      Text("Créer un produit"),
                     ],
                   ),
                 ),
@@ -126,17 +214,18 @@ class _AcceuilState extends State<Acceuil> {
                               SizedBox(height: 3),
                               TextButton(
                                 onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Details(
-                                          image: product['image'],
-                                          name: product['name'],
-                                          price: product['Price'],
-                                          description: product['description']
-                                        ),
-                                      ),
-                                    );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => Details(
+                                            image: product['image'],
+                                            name: product['name'],
+                                            price: product['Price'],
+                                            description: product['description'],
+                                          ),
+                                    ),
+                                  );
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor: Colors.black,
@@ -156,14 +245,12 @@ class _AcceuilState extends State<Acceuil> {
                               SizedBox(height: 3),
                               ElevatedButton(
                                 onPressed: () {
-                                  // Ajoute le produit au CartManager
                                   CartManager().addItem({
                                     'name': product['name'],
                                     'image': product['image'],
                                     'price': product['Price'],
                                   });
 
-                                  // Affiche une alerte
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
@@ -174,7 +261,12 @@ class _AcceuilState extends State<Acceuil> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color.fromARGB(255,49,203, 54,),
+                                  backgroundColor: Color.fromARGB(
+                                    255,
+                                    49,
+                                    203,
+                                    54,
+                                  ),
                                   foregroundColor: Colors.white,
                                   minimumSize: Size(100, 35),
                                   shape: RoundedRectangleBorder(
@@ -182,14 +274,15 @@ class _AcceuilState extends State<Acceuil> {
                                   ),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(
                                       Icons.shopping_cart,
-                                      color: Colors.red,
+                                      color: Colors.white,
                                     ),
-                                    Text("Ajouter au panier"),
+                                    SizedBox(width: 5),
+                                    Text("Ajouter"),
                                   ],
                                 ),
                               ),

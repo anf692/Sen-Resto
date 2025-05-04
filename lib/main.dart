@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sen_restau/acceuil1.dart';
+import 'package:sen_restau/connexion.dart';
+import 'package:sen_restau/provider/AuthProvider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,9 +20,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AccueilPage(),
-      debugShowCheckedModeBanner: false,
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, _) {
+        return MaterialApp(
+          home: authProvider.token == null ? AccueilPage() : Connexion(),
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }
