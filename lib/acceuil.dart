@@ -1,53 +1,104 @@
 import 'package:flutter/material.dart';
-import 'package:sen_restau/cart.dart';
-import 'package:sen_restau/cart_manager.dart';
+import 'AddProductPage.dart';
+import 'cart.dart';
+import 'cart_manager.dart';
+import 'details.dart';
+import 'navbar.dart';
 
 class Acceuil extends StatefulWidget {
-  const Acceuil({super.key});
+  const Acceuil({Key? key}) : super(key: key); // Correction de la clé
 
   @override
   State<Acceuil> createState() => _AcceuilState();
 }
 
 class _AcceuilState extends State<Acceuil> {
+  // Liste des produits avec un type explicite
+  final List<Map<String, dynamic>> products = [
+  {
+    'image': 'images/burgger.PNG',
+    'name': 'Burger',
+    'price': 588.0,
+    'description': 'Un délicieux burger fait avec un steak juteux, du fromage fondant, des légumes frais et une sauce spéciale maison.'
+  },
+  {
+    'image': 'images/chawarma.PNG',
+    'name': 'Chawarma',
+    'price': 499.0,
+    'description': 'Savourez notre chawarma garni de viande marinée, de crudités croquantes et nappé de sauce blanche onctueuse, enroulé dans un pain tendre.'
+  },
+  {
+    'image': 'images/fataya.PNG',
+    'name': 'Fataya',
+    'price': 390.0,
+    'description': 'Goûtez à notre fataya sénégalais, une pâte croustillante farcie au poisson épicé, accompagné de notre sauce tomate maison.'
+  },
+  {
+    'image': 'images/logo.PNG',
+    'name': 'Burger Mini',
+    'price': 20.0,
+    'description': 'Un mini burger parfait pour les petites faims, avec un petit steak, fromage et sauce, tout en restant gourmand.'
+  },
+  {
+    'image': 'images/sandiwich.PNG',
+    'name': 'Sandwich',
+    'price': 384.0,
+    'description': 'Un sandwich généreux, garni de poulet grillé, légumes croquants et une sauce crémeuse, le tout dans un pain moelleux.'
+  },
+  {
+    'image': 'images/tacos.PNG',
+    'name': 'Tacos',
+    'price': 164.0,
+    'description': 'Des tacos savoureux remplis de viande tendre, de frites croustillantes et de fromage fondant, roulés dans une galette chaude.'
+  },
+];
+
+  void addProduct(Map<String, dynamic> product) {
+  setState(() {
+    products.add({
+      'name': product['name'],
+      'price': product['price'],
+      'imageBytes': product['imageBytes'],
+      'description': product['description'] ?? 'Pas de description',
+      // Ajoutez d'autres champs si nécessaire
+    });
+  });
+}
+
   @override
   Widget build(BuildContext context) {
-    const List<Map<String, dynamic>> products = [
-      {'image': 'images/burgger.PNG', 'name': 'Burgger', 'Price': 588},
-      {'image': 'images/chawarma.PNG', 'name': 'Chawarma', 'Price': 499},
-      {'image': 'images/fataya.PNG', 'name': 'Fataya', 'Price': 390},
-      {'image': 'images/logo.PNG', 'name': 'Burgger', 'Price': 20},
-      {'image': 'images/sandiwich.PNG', 'name': 'Sandiwich', 'Price': 384},
-      {'image': 'images/tacos.PNG', 'name': 'Tacos', 'Price': 164},
-    ];
-
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 234, 234),
       appBar: AppBar(
         actions: [Icon(Icons.more_vert)],
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
       ),
       drawer: Drawer(
         child: ListView(
           children: [
             ListTile(
-              leading: Icon(Icons.home, color: Colors.green),
+              leading: Icon(Icons.home, color: Color.fromARGB(255, 49, 203, 54)),
               title: Text("Acceuil"),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.shopping_cart, color: Colors.green),
-              title: Text("Panier"),
               onTap: () {
-                // Navigue vers la page Panier en partageant le CartManager
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => CartPage(cart: CartManager().cart),
-                  ),
+                  MaterialPageRoute(builder: (context) => Navbar()),
                 );
               },
             ),
             ListTile(
-              leading: Icon(Icons.contact_emergency, color: Colors.green),
+              leading: Icon(Icons.shopping_cart, color: Color.fromARGB(255, 49, 203, 54)),
+              title: Text("Panier"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage(cart: CartManager().cart)),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.contact_emergency, color: Color.fromARGB(255, 49, 203, 54)),
               title: Text("Contact"),
               onTap: () {},
             ),
@@ -58,14 +109,26 @@ class _AcceuilState extends State<Acceuil> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            SizedBox(height: 22),
+            SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ElevatedButton(
-                  onPressed: () {},
+               ElevatedButton(
+                  onPressed: () async {
+                    final newProduct = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddProductPage()),
+                    );
+
+                    if (newProduct != null) {
+                      addProduct(newProduct);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Produit ajouté à la liste avec succès!")),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Color.fromARGB(255, 49, 203, 54),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -75,8 +138,9 @@ class _AcceuilState extends State<Acceuil> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.add, color: Colors.red),
-                      Text("Creer un produits"),
+                      Icon(Icons.add, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text("Créer un produit"),
                     ],
                   ),
                 ),
@@ -85,57 +149,77 @@ class _AcceuilState extends State<Acceuil> {
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
-                childAspectRatio: 0.75,
+                childAspectRatio: 0.9,
                 children: products.map((product) {
                   return Container(
                     margin: EdgeInsets.all(8),
-                    height: 100,
+                    height: 70,
                     child: Card(
                       color: Colors.white,
                       child: Column(
                         children: [
-                          Image.asset(
-                            product['image'],
-                            height: 150,
-                            width: 1000,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(height: 15),
+                          // ✅ GESTION DYNAMIQUE IMAGE (asset ou memory)
+                          if (product.containsKey('imageBytes'))
+                            Image.memory(
+                              product['imageBytes'],
+                              height: 100,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
+                          else
+                            Image.asset(
+                              product['image'],
+                              height: 100,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          SizedBox(height: 3),
                           TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.black,
-                            ),
-                            child: Text(
-                              product['name'],
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          Text(
-                            "${product['Price']} FCFA",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          SizedBox(height: 30),
-                          ElevatedButton(
                             onPressed: () {
-                              // Ajoute le produit au CartManager
-                              CartManager().addItem({
-                                'name': product['name'],
-                                'image': product['image'],
-                                'price': product['Price'],
-                              });
-
-                              // Affiche une confirmation
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('${product['name']} ajouté au panier !'),
-                                  duration: Duration(seconds: 1),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Details(
+                                    image: product['image'] ?? '',
+                                    name: product['name'],
+                                    price: product['Price'] ?? product['price'],
+                                    description: product['description'],
+                                  ),
                                 ),
                               );
                             },
+                            style: TextButton.styleFrom(foregroundColor: Colors.black),
+                            child: Text(
+                              product['name'],
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Text(
+                            "${product['Price'] ?? product['price']} FCFA",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          SizedBox(height: 3),
+                         ElevatedButton(
+                          onPressed: () {
+                            CartManager().addItem({
+                              'name': product['name'],
+                              'image': product.containsKey('imageBytes') ? null : product['image'],
+                              'imageBytes': product['imageBytes'],
+                              'price': product['price'] ?? product['Price'],
+                              'quantity': 1,
+                            });
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('${product['name']} ajouté au panier !'),
+                                duration: Duration(seconds: 1),
+                              ),
+                            );
+                          },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: Color.fromARGB(255, 49, 203, 54),
                               foregroundColor: Colors.white,
+                              minimumSize: Size(100, 35),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
