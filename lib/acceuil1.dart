@@ -28,7 +28,7 @@ class AccueilPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return Connexion();
+                        return Inscrire();
                       },
                     ),
                   );
@@ -45,7 +45,7 @@ class AccueilPage extends StatelessWidget {
                   ),
                 ),
                 child: const Text(
-                  'Se Connecter',
+                  "S'inscrire",
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -55,7 +55,7 @@ class AccueilPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Vous n\'avez pas de compte ?',
+                    "j'ai deja un compte ?",
                     style: TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   TextButton(
@@ -64,7 +64,7 @@ class AccueilPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return Inscrire();
+                            return Connexion();
                           },
                         ),
                       );
@@ -73,7 +73,7 @@ class AccueilPage extends StatelessWidget {
                       foregroundColor: Colors.red,
                     ),
                     child: const Text(
-                      'S\'inscrire',
+                      'Se connecter',
                       style: TextStyle(color: Colors.red, fontSize: 16),
                     ),
                   ),
